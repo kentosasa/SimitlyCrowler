@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  surface_form: MyString
+  pos: MyString
+  basic_form: MyString
+
+two:
+  surface_form: MyString
+  pos: MyString
+  basic_form: MyString
