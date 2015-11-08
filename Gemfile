@@ -49,4 +49,5 @@ gem 'open_uri_redirections'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'natto'
-
+gem 'nokogiri'
+gem 'biffbot'

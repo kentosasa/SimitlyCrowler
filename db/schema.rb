@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105112206) do
+ActiveRecord::Schema.define(version: 20151105130937) do
 
   create_table "entries", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(version: 20151105112206) do
     t.integer  "entry_id",   limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "entry_word_relations", force: :cascade do |t|
+    t.integer  "entry_id",   limit: 4
+    t.integer  "word_id",    limit: 4
+    t.integer  "position",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "words", force: :cascade do |t|
+    t.string   "surface_form", limit: 255
+    t.string   "pos",          limit: 255
+    t.string   "basic_form",   limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
 end
