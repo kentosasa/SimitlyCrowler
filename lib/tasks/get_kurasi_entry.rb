@@ -33,8 +33,9 @@ end
 result = []
 rss = nil
 
+# 暮らしRSS=> http://b.hatena.ne.jp/entrylist/life?mode=rss&threshold=50&sort=recent
 # リダイレクトして、うまくいかなかったのでopen-urlのミドルウェアを使う
-open(URI.escape("http://b.hatena.ne.jp/entrylist/life?mode=rss&threshold=50&sort=recent"), :allow_redirections => :all) do |f|
+open(URI.escape(ARGV[0]), :allow_redirections => :all) do |f|
   rss = RSS::Parser.parse(f.read)
 end
 #rss = conn.get "https://b.hatena.ne.jp/search/text?q=#{tag}&mode=rss&threshold=30&sort=recent"

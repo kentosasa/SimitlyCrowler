@@ -51,3 +51,4 @@ gem 'faraday_middleware'
 gem 'natto'
 gem 'nokogiri'
 gem 'biffbot'
+gem 'whenever', :require => false
