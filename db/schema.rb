@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105130937) do
+ActiveRecord::Schema.define(version: 20151109075620) do
 
   create_table "entries", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -20,12 +20,14 @@ ActiveRecord::Schema.define(version: 20151105130937) do
   end
 
   create_table "entry_contents", force: :cascade do |t|
-    t.text     "content",     limit: 65535
-    t.text     "thumbnail",   limit: 65535
-    t.text     "description", limit: 65535
-    t.integer  "entry_id",    limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "content",      limit: 65535
+    t.text     "content_html", limit: 65535
+    t.text     "url",          limit: 65535
+    t.text     "thumbnail",    limit: 65535
+    t.text     "description",  limit: 65535
+    t.integer  "entry_id",     limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "entry_meta", force: :cascade do |t|
@@ -42,6 +44,14 @@ ActiveRecord::Schema.define(version: 20151105130937) do
     t.integer  "position",   limit: 4
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+  end
+
+  create_table "keywords", force: :cascade do |t|
+    t.integer  "entry_id",   limit: 4
+    t.integer  "word_id",    limit: 4
+    t.float    "score",      limit: 24
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "words", force: :cascade do |t|

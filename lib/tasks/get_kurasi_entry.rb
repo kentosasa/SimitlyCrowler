@@ -44,8 +44,6 @@ rss.items.each do |item|
   res = JSON.parse(res.body)
   entry[:link] = item.about
   entry[:description] = item.description
-  entry[:content_encoded] = item.content_encoded
-  entry[:screenshot] = res["screenshot"]
   entry[:count] = res["count"]
   entry[:tags] = getTags(res)
   diff_raw = conn.get 'http://api.diffbot.com/v3/article', {url: item.about, token: '47559598aeae1c9c3f51374299178952'}
@@ -58,7 +56,6 @@ rss.items.each do |item|
   rescue
     entry[:screenshot] = res["screenshot"]
   end
-  puts entry
   result << entry
 end
 
@@ -78,8 +75,8 @@ result.each do |data|
   end
   content = entry.entry_content
   if content.present?
-    content.update(content: data[:content], thumbnail: data[:screenshot], description: data[:description])
+    content.update(content: data[:content], thumbnail: data[:screenshot], description: data[:description], content_html: data[:content_encoded], url: entry[:link])
   else
-    content = EntryContent.create(content: data[:content], thumbnail: data[:screenshot], description: data[:description], entry_id: entry.id)
+    content = EntryContent.create(content: data[:content], thumbnail: data[:screenshot], description: data[:description], entry_id: entry.id, content_html: data[:content_encoded], url: entry[:link])
   end
 end
