@@ -22,6 +22,6 @@
 # 実行コマンド whenever -s 'environment=development' -w
 set :environment, :production
 
-every '*/15 * * * *' do
-  runner "Tmp.crowl"
-end
+# every '* */1 * * *' do
+#   runner "Tmp.crowl"
+# end

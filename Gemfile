@@ -52,3 +52,7 @@ gem 'natto'
 gem 'nokogiri'
 gem 'biffbot'
 gem 'whenever', :require => false
+gem 'pry'
+gem 'pry-nav'
+gem 'pry-rails', :group => :development
+gem 'pry-stack_explorer'
