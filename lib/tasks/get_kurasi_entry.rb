@@ -43,6 +43,7 @@ rss.items.each do |item|
   entry = {}
   res = conn.get 'http://b.hatena.ne.jp/entry/json/', {:url => item.about}
   res = JSON.parse(res.body)
+  binding.pry
   entry[:link] = item.about
   entry[:description] = item.description
   entry[:count] = res["count"]
