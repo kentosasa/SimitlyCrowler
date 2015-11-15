@@ -1,6 +1,8 @@
 class Api::V1::EntriesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
-    render json: Entry.joins(:entry_content).joins(:entry_meta).all
+    render json: Entry.all
   end
 
   def links
@@ -56,6 +58,7 @@ class Api::V1::EntriesController < ApplicationController
         next
       end
     end
+    puts tf.size
     tf.each do |key, val|
       tf[key] = val/n.to_f
     end

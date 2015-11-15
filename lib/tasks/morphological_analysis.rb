@@ -7,7 +7,9 @@ require 'natto'
 require 'nokogiri'
 
 natto = Natto::MeCab.new
-Entry.all.each do |en|
+entry_count = Entry.all.count
+Entry.all.each_with_index do |en, index|
+  puts "#{index}/#{entry_count}だよ"
   begin
     next if en.words.present?
     position = 0

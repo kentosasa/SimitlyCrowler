@@ -11,13 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109075620) do
+ActiveRecord::Schema.define(version: 20151113234914) do
 
   create_table "entries", force: :cascade do |t|
     t.string   "title",      limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  add_index "entries", ["title"], name: "index_entries_on_title", using: :btree
 
   create_table "entry_contents", force: :cascade do |t|
     t.text     "content",      limit: 65535
@@ -46,6 +48,8 @@ ActiveRecord::Schema.define(version: 20151109075620) do
     t.datetime "updated_at",           null: false
   end
 
+  add_index "entry_word_relations", ["entry_id", "word_id"], name: "index_entry_word_relations_on_entry_id_and_word_id", using: :btree
+
   create_table "keywords", force: :cascade do |t|
     t.integer  "entry_id",   limit: 4
     t.integer  "word_id",    limit: 4
@@ -54,6 +58,8 @@ ActiveRecord::Schema.define(version: 20151109075620) do
     t.datetime "updated_at",            null: false
   end
 
+  add_index "keywords", ["entry_id", "word_id"], name: "index_keywords_on_entry_id_and_word_id", using: :btree
+
   create_table "words", force: :cascade do |t|
     t.string   "surface_form", limit: 255
     t.string   "pos",          limit: 255
@@ -61,5 +67,7 @@ ActiveRecord::Schema.define(version: 20151109075620) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
+
+  add_index "words", ["surface_form", "pos", "basic_form"], name: "index_words_on_surface_form_and_pos_and_basic_form", using: :btree
 
 end

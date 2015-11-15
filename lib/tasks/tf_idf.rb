@@ -31,17 +31,18 @@ def getTfIdf(tf, idf)
   end
   return tf_idf
 end
-count = 0
-Keyword.delete_all
-Entry.all.each do |entry|
+
+# Keyword.delete_all
+entry_count = Entry.all.count
+Entry.all.each_with_index do |entry, index|
+  puts "#{index}/#{entry_count}"
+  next if entry.keywords.present?
   tf = getTF(entry)
   idf = getDF(entry, tf)
   tf_idf = getTfIdf(tf, idf)
   tf_idf = tf_idf.sort_by{|k, v| v}.reverse
   tf_idf.each_with_index do |val, n|
     break if n >= 10
-    count += 1
-    puts count
     word = Word.find_by(surface_form: val[0], pos: "名詞")
     Keyword.create(entry_id: entry.id, word_id: word.id, score: val[1])
   end

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     scope module: :v1 do
       resources :entries do
         collection do
-          get :links
+          post :links
         end
       end
     end

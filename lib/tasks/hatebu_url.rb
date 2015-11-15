@@ -4,7 +4,7 @@ require 'csv'
 
 url = 'http://b.hatena.ne.jp/hotentry/'#切り出すURLを指定します。
 urls = []
-20141112.upto(20151112) do |day|
+20150912.upto(20151112) do |day|
   begin
     url = "http://b.hatena.ne.jp/hotentry/#{day}"
     puts url
