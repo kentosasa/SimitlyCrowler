@@ -11,8 +11,7 @@ class Api::V1::EntriesController < ApplicationController
     text = params[:text]
     max = 30
     tf = getTf(text)
-    idf = getIdf(tf)
-    tf_idf = getTfIdf(tf, idf)
+    tf_idf = getTfIdf(tf)
     data = []
 
     tf_idf.each_with_index do |val, n|
@@ -64,27 +63,39 @@ class Api::V1::EntriesController < ApplicationController
     return tf
   end
 
-  def getIdf(tf)
-    idf = Hash.new(0)
-    entries_count = Entry.count
+  def getTfIdf(tf)
+    tf_idf = Hash.new(0)
     tf.each do |key, val|
       begin
-        word = Word.find_by(surface_form: key, pos: "名詞")
-       # idf[key] = Math.log(entries_count/word.entry_word_relations.count.to_f) + 1
-       # EntryWordRelation.where(word_id: 69560).pluck(:id).count
-        idf[key] = Math.log(entries_count/EntryWordRelation.where(word_id: word.id).count.to_f) + 1
+        tf_idf[key] = val * Word.find_by(surface_form: key, pos: "名詞").idf
       rescue
         next
       end
     end
-    return idf
-  end
-
-  def getTfIdf(tf, idf)
-    tf_idf = Hash.new(0)
-    tf.each do |key, val|
-      tf_idf[key] = val * idf[key]
-    end
     return tf_idf.sort_by{|k, v| v}.reverse
   end
+
+  # def getIdf(tf)
+  #   idf = Hash.new(0)
+  #   entries_count = Entry.count
+  #   tf.each do |key, val|
+  #     begin
+  #       word = Word.find_by(surface_form: key, pos: "名詞")
+  #      # idf[key] = Math.log(entries_count/word.entry_word_relations.count.to_f) + 1
+  #      # EntryWordRelation.where(word_id: 69560).pluck(:id).count
+  #       idf[key] = Math.log(entries_count/EntryWordRelation.where(word_id: word.id).count.to_f) + 1
+  #     rescue
+  #       next
+  #     end
+  #   end
+  #   return idf
+  # end
+
+  # def getTfIdf(tf, idf)
+  #   tf_idf = Hash.new(0)
+  #   tf.each do |key, val|
+  #     tf_idf[key] = val * idf[key]
+  #   end
+  #   return tf_idf.sort_by{|k, v| v}.reverse
+  # end
 end

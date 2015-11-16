@@ -49,6 +49,8 @@ test:
 #
 production:
   <<: *default
+  host: 153.126.174.105
   database: SimilityCrowler_production
-  username: SimilityCrowler
+  username: root
+  password: kentopass
   password: <%= ENV['SIMILITYCROWLER_DATABASE_PASSWORD'] %>

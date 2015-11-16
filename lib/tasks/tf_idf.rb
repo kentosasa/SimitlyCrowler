@@ -14,32 +14,32 @@ def getTF(entry)
   return tf
 end
 
-def getDF(entry, tf)
-  idf = Hash.new(0)
-  entries_count = Entry.count
-  tf.each do |key, val|
-    word = Word.find_by(surface_form: key, pos: "名詞")
-    idf[key] = Math.log(entries_count/word.entry_word_relations.count.to_f) + 1
-  end
-  return idf
-end
-
-def getTfIdf(tf, idf)
+def getTfIdf(tf)
   tf_idf = Hash.new(0)
   tf.each do |key, val|
-    tf_idf[key] = val * idf[key]
+    tf_idf[key] = val * Word.find_by(surface_form: key, pos: "名詞").idf
   end
   return tf_idf
 end
 
+def setIdf
+  entries_count = Entry.count
+  word_count = Word.where(pos: "名詞").count
+  Word.where(pos: "名詞").each_with_index do |word, index|
+    next if word.idf.present?
+    puts "#{index}/#{word_count}"
+    word.update(idf: (entries_count/word.entry_word_relations.count.to_f)+1)
+  end
+end
+
 # Keyword.delete_all
 entry_count = Entry.all.count
+setIdf
 Entry.all.each_with_index do |entry, index|
   puts "#{index}/#{entry_count}"
   next if entry.keywords.present?
   tf = getTF(entry)
-  idf = getDF(entry, tf)
-  tf_idf = getTfIdf(tf, idf)
+  tf_idf = getTfIdf(tf)
   tf_idf = tf_idf.sort_by{|k, v| v}.reverse
   tf_idf.each_with_index do |val, n|
     break if n >= 10
