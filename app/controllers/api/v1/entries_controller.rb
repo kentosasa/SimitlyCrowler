@@ -9,7 +9,7 @@ class Api::V1::EntriesController < ApplicationController
     url = params[:url]
     title = params[:title]
     text = params[:text]
-    max = 30
+    max = 50
     tf = getTf(text)
     tf_idf = getTfIdf(tf)
     data = []

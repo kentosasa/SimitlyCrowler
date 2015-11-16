@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20151116123327) do
     t.datetime "updated_at",                 null: false
   end
 
+  add_index "entry_contents", ["entry_id"], name: "index_entry_contents_on_entry_id", using: :btree
+
   create_table "entry_meta", force: :cascade do |t|
     t.integer  "count",      limit: 4
     t.string   "category",   limit: 255
