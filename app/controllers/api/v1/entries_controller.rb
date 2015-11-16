@@ -15,7 +15,6 @@ class Api::V1::EntriesController < ApplicationController
     tf_idf = getTfIdf(tf, idf)
     data = []
 
-
     tf_idf.each_with_index do |val, n|
       break if data.count >= max
       begin
@@ -71,7 +70,9 @@ class Api::V1::EntriesController < ApplicationController
     tf.each do |key, val|
       begin
         word = Word.find_by(surface_form: key, pos: "名詞")
-        idf[key] = Math.log(entries_count/word.entry_word_relations.count.to_f) + 1
+       # idf[key] = Math.log(entries_count/word.entry_word_relations.count.to_f) + 1
+       # EntryWordRelation.where(word_id: 69560).pluck(:id).count
+        idf[key] = Math.log(entries_count/EntryWordRelation.where(word_id: word.id).count.to_f) + 1
       rescue
         next
       end
